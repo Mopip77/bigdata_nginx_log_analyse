@@ -42,7 +42,7 @@ public class Driver {
             job.setPartitionerClass(TimePeriodPartitioner.class);
         }
 
-//        job.setGroupingComparatorClass(DateAndStringComparator.class);
+        job.setGroupingComparatorClass(DateAndStringComparator.class);
 //        job.setSortComparatorClass(DateAndStringComparator.class);
 
 //        job.setNumReduceTasks(1);
