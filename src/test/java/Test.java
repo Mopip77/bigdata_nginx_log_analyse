@@ -1,3 +1,4 @@
+import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import properties.MyProperties;
 
 import java.text.ParseException;
@@ -30,7 +31,6 @@ public class Test {
 
     @org.junit.Test
     public void h3a() {
-        String  haha = (String) MyProperties.getInstance().getPro().get("haha");
-        System.out.println(haha);
+//        DateAndSomeThingComaratorFactory
     }
 }

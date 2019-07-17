@@ -1,7 +1,5 @@
 package model;
 
-import sun.rmi.runtime.Log;
-
 public class DateAndLogItem {
     private Long date;
     private LogItem logItem;

@@ -1,6 +1,6 @@
 package reducer;
 
-import model.DateAndString;
+import model.TimePeriodAndText;
 import model.LogItem;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 
-public class TestReducer extends Reducer<DateAndString, LogItem, Text, Text> {
+public class TestReducer extends Reducer<TimePeriodAndText, LogItem, Text, Text> {
     private long totalIpCount = 0;
     private long totalUriCount = 0;
     private long totalVisitedCount = 0;
@@ -23,7 +23,7 @@ public class TestReducer extends Reducer<DateAndString, LogItem, Text, Text> {
      * @throws InterruptedException
      */
     @Override
-    protected void reduce(DateAndString key, Iterable<LogItem> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(TimePeriodAndText key, Iterable<LogItem> values, Context context) throws IOException, InterruptedException {
         context.write(new Text("haha"), new Text("bibi"));
     }
 

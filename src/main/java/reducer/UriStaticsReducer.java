@@ -1,7 +1,7 @@
 package reducer;
 
 import channel.NextStepMessage;
-import model.DateAndString;
+import model.TimePeriodAndText;
 import model.LogItem;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -12,19 +12,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class UriStaticsReducer extends Reducer<DateAndString, LogItem, Text, Text> {
+public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, Text, Text> {
     private long totalIpCount = 0;
     private long totalUriCount = 0;
     private long totalVisitedCount = 0;
+    private String info;
 
     private static String  startTime = (String) MyProperties.getInstance().getPro().get("startTime");
     private static String  endTime =  (String) MyProperties.getInstance().getPro().get("endTime");
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
-        String info = "---------------\nstartTime: " + startTime + "\nendTime: " + endTime + "\n----------------";
-        NextStepMessage.getInstance().append(info);
-        context.write(new Text(info), new Text());
+        info = "---------------\nstartTime: " + startTime + "\nendTime: " + endTime + "\n----------------";
+        context.write(null, new Text());
     }
 
     /**
@@ -37,7 +37,7 @@ public class UriStaticsReducer extends Reducer<DateAndString, LogItem, Text, Tex
      * @throws InterruptedException
      */
     @Override
-    protected void reduce(DateAndString key, Iterable<LogItem> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(TimePeriodAndText key, Iterable<LogItem> values, Context context) throws IOException, InterruptedException {
         Set uniqueIpSet = new HashSet();
         int uriVisitedCount = 0;
         for (LogItem value : values) {
@@ -49,13 +49,13 @@ public class UriStaticsReducer extends Reducer<DateAndString, LogItem, Text, Tex
         totalUriCount += 1;
         totalVisitedCount += uriVisitedCount;
 
-        context.write(new Text((String) key.getItem()), new Text(uriVisitedCount + " " + uniqueIpSet.size()));
+        context.write(new Text(key.getItem()), new Text(uriVisitedCount + " " + uniqueIpSet.size()));
     }
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        String info = "totalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount + "\n------------------";
-        NextStepMessage.getInstance().append("\n"+info);
-        context.write(new Text(info), new Text());
+        String endInfo = "\ntotalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount + "\n------------------";
+        NextStepMessage.getInstance().append("\n"+info+endInfo);
+        context.write(new Text(endInfo), new Text());
     }
 }

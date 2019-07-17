@@ -5,15 +5,11 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.log4j.lf5.viewer.LogTable;
 import properties.MyProperties;
-import sun.rmi.runtime.Log;
 
-import javax.annotation.RegEx;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -39,7 +35,7 @@ public class ParserLogMapper extends Mapper<LongWritable, Text, LogItem, IntWrit
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss z", Locale.ENGLISH);
         try {
             Date date = simpleDateFormat.parse(logDate);
-            long dateTime = date.getTime() / 1000;
+            Long dateTime = date.getTime() / 1000;
             return (dateTime >= startTime && dateTime <= endTime) ? dateTime : null;
         } catch (ParseException e) {
             System.out.println(e);

@@ -11,14 +11,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
-public class ParserLogJob implements MyJob {
+public class ParserLogJob extends MyJob {
 
-    private Job job;
-    private Configuration configuration;
-    private static String JOB_NAME = "parse_log";
-
-    public Job getJob() {
-        return job;
+    public ParserLogJob() {
+        JOB_NAME = "parse_log";
     }
 
     /**
@@ -41,9 +37,5 @@ public class ParserLogJob implements MyJob {
 
         FileInputFormat.setInputPaths(job, new Path(srcPath));
         FileOutputFormat.setOutputPath(job, new Path(OutputPath));
-    }
-
-    public boolean run() throws InterruptedException, IOException, ClassNotFoundException {
-        return job.waitForCompletion(true);
     }
 }

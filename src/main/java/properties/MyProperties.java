@@ -48,7 +48,7 @@ public class MyProperties {
         }
 
         String timePeriod = pro.getProperty("timePeriod");
-        pro.setProperty("timePeriod", String.valueOf(Integer.valueOf(timePeriod) * 3600));
+        pro.setProperty("timePeriod", String.valueOf(Integer.valueOf(timePeriod) * 60));
     }
 
     private MyProperties() throws IOException {
