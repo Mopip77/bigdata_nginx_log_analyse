@@ -17,7 +17,6 @@ public class TimePeriodUriStaticsJob implements MyJob {
     private Configuration configuration;
     private static String JOB_NAME = "uri_statics";
 
-    @Override
     public void setup(String srcPath, String OutputPath, Class driver) throws IOException {
         configuration = new Configuration();
         job = Job.getInstance(configuration, JOB_NAME);
@@ -36,12 +35,10 @@ public class TimePeriodUriStaticsJob implements MyJob {
         FileOutputFormat.setOutputPath(job, new Path(OutputPath));
     }
 
-    @Override
     public boolean run() throws InterruptedException, IOException, ClassNotFoundException {
         return job.waitForCompletion(true);
     }
 
-    @Override
     public Job getJob() {
         return job;
     }

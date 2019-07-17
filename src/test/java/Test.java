@@ -1,3 +1,5 @@
+import properties.MyProperties;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,5 +26,11 @@ public class Test {
         for (String s : split) {
             System.out.println(s);
         }
+    }
+
+    @org.junit.Test
+    public void h3a() {
+        String  haha = (String) MyProperties.getInstance().getPro().get("haha");
+        System.out.println(haha);
     }
 }

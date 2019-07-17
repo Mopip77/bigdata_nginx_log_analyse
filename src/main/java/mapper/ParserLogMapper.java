@@ -6,6 +6,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.log4j.lf5.viewer.LogTable;
+import properties.MyProperties;
 import sun.rmi.runtime.Log;
 
 import javax.annotation.RegEx;
@@ -26,16 +27,9 @@ public class ParserLogMapper extends Mapper<LongWritable, Text, LogItem, IntWrit
     private static LogItem logItem = new LogItem();
     private static String LOG_SPLITTER = "-";
 
-    private static int startTime;
-    private static int endTime;
-    private static int timePeriod;
-
-    static {
-        // 读取startTime, endTime, timePeriod的配置文件
-        startTime = 1427709094;
-        endTime = 1427713294;
-        timePeriod = 0;
-    }
+    private static long startTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("startTimeTimeStamp"));
+    private static long endTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("endTimeTimeStamp"));
+    private static int timePeriod = Integer.valueOf(MyProperties.getInstance().getPro().getProperty("timePeriod"));
 
     /**
      * 传入log的时间，并且startTime必须不为0，否则不必filter

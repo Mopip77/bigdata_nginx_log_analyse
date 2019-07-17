@@ -1,9 +1,11 @@
 package reducer;
 
+import channel.NextStepMessage;
 import model.DateAndString;
 import model.LogItem;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
+import properties.MyProperties;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -14,6 +16,16 @@ public class UriStaticsReducer extends Reducer<DateAndString, LogItem, Text, Tex
     private long totalIpCount = 0;
     private long totalUriCount = 0;
     private long totalVisitedCount = 0;
+
+    private static String  startTime = (String) MyProperties.getInstance().getPro().get("startTime");
+    private static String  endTime =  (String) MyProperties.getInstance().getPro().get("endTime");
+
+    @Override
+    protected void setup(Context context) throws IOException, InterruptedException {
+        String info = "---------------\nstartTime: " + startTime + "\nendTime: " + endTime + "\n----------------";
+        NextStepMessage.getInstance().append(info);
+        context.write(new Text(info), new Text());
+    }
 
     /**
      * 经过group，key为<date:long, uri:string> value为uri和date都属于这个key的LogItem
@@ -42,7 +54,8 @@ public class UriStaticsReducer extends Reducer<DateAndString, LogItem, Text, Tex
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
-        context.write(new Text("totalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount),
-                new Text("\n------------------"));
+        String info = "totalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount + "\n------------------";
+        NextStepMessage.getInstance().append("\n"+info);
+        context.write(new Text(info), new Text());
     }
 }
