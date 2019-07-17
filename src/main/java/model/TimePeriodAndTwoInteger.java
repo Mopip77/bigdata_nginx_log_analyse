@@ -7,7 +7,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 public class TimePeriodAndTwoInteger extends TimePeriodAndSomething<TimePeriodAndTwoInteger, TwoInteger> {
-    private TwoInteger item;
 
     public TimePeriodAndTwoInteger(Integer period, TwoInteger item) {
         super(period, item);
@@ -18,14 +17,17 @@ public class TimePeriodAndTwoInteger extends TimePeriodAndSomething<TimePeriodAn
 
     public void write(DataOutput out) throws IOException {
         out.writeInt(period);
-        out.writeInt(item.getA1());
-        out.writeInt(item.getA2());
+        item.write(out);
+//        out.writeInt(item.getA1());
+//        out.writeInt(item.getA2());
     }
 
     public void readFields(DataInput in) throws IOException {
         period = in.readInt();
-        item.setA1(in.readInt());
-        item.setA2(in.readInt());
+        setItem(new TwoInteger());
+        item.readFields(in);
+//        item.setA1(in.readInt());
+//        item.setA2(in.readInt());
     }
 
     @Override

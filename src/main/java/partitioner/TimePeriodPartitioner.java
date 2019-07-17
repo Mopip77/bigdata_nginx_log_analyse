@@ -15,12 +15,12 @@ import properties.MyProperties;
  */
 @InterfaceAudience.Public
 @InterfaceStability.Stable
-public class TimePeriodPartitioner extends Partitioner<TimePeriodAndSomething, LogItem> {
+public class TimePeriodPartitioner extends Partitioner<TimePeriodAndSomething, Object> {
     // 配置文件读入
 //    private static final long startTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("startTimeTimeStamp"));
     private static final int timePeriod = Integer.valueOf(MyProperties.getInstance().getPro().getProperty("timePeriod"));
 
-    public int getPartition(TimePeriodAndSomething timePeriodAndSomething, LogItem logItem, int numPartitions) {
+    public int getPartition(TimePeriodAndSomething timePeriodAndSomething, Object object, int numPartitions) {
         return timePeriod == 0 ? 0 : timePeriodAndSomething.getPeriod() % numPartitions;
     }
 }

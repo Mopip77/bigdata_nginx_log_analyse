@@ -38,7 +38,7 @@ public class UriStaticsJob extends MyJob {
 
         job.setNumReduceTasks(calNumTasks());
         job.setPartitionerClass(TimePeriodPartitioner.class);
-        job.setGroupingComparatorClass(DateAndSomeThingComaratorFactory.tete());
+        job.setGroupingComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndText.class, false));
 
         ChainReducer.setReducer(job, UriStaticsReducer.class, TimePeriodAndText.class, LogItem.class, TimePeriodAndText.class, Text.class, new Configuration(false));
 

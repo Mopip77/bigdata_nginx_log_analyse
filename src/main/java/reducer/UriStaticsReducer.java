@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, Text, Text> {
+public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimePeriodAndText, Text> {
     private long totalIpCount = 0;
     private long totalUriCount = 0;
     private long totalVisitedCount = 0;
@@ -24,7 +24,7 @@ public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, Text,
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
         info = "---------------\nstartTime: " + startTime + "\nendTime: " + endTime + "\n----------------";
-        context.write(null, new Text());
+        context.write(null, new Text(info));
     }
 
     /**
@@ -49,13 +49,13 @@ public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, Text,
         totalUriCount += 1;
         totalVisitedCount += uriVisitedCount;
 
-        context.write(new Text(key.getItem()), new Text(uriVisitedCount + " " + uniqueIpSet.size()));
+        context.write(key, new Text(uriVisitedCount + " " + uniqueIpSet.size()));
     }
 
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         String endInfo = "\ntotalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount + "\n------------------";
         NextStepMessage.getInstance().append("\n"+info+endInfo);
-        context.write(new Text(endInfo), new Text());
+        context.write(null, new Text(endInfo));
     }
 }

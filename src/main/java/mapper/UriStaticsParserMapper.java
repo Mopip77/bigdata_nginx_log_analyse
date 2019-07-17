@@ -17,7 +17,6 @@ public class UriStaticsParserMapper extends Mapper<LongWritable, Text, TimePerio
 
         Integer partition = null;
         String uri = null;
-        TimePeriodAndText timePeriodAndText = null;
         Integer a = null;
         Integer b = null;
         try {
@@ -28,7 +27,7 @@ public class UriStaticsParserMapper extends Mapper<LongWritable, Text, TimePerio
         } catch (Exception e) {
             return;
         }
-        if (timePeriodAndText != null && a != null && b != null)
+        if (a != null && b != null)
             context.write(new TimePeriodAndTwoInteger(partition, new TwoInteger(a, b)), new Text(uri));
     }
 }

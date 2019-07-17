@@ -1,5 +1,6 @@
 package job;
 
+import comparator.DateAndSomeThingComaratorFactory;
 import comparator.TwoIntegerReverseComparator;
 import mapper.UriStaticsParserMapper;
 import model.TimePeriodAndTwoInteger;
@@ -31,7 +32,9 @@ public class ValueSortJob extends MyJob {
         job.setMapOutputValueClass(Text.class);
 
         job.setPartitionerClass(TimePeriodPartitioner.class);
-        job.setSortComparatorClass(TwoIntegerReverseComparator.class);
+        // TODO
+//        job.setSortComparatorClass(TwoIntegerReverseComparator.class);
+        job.setSortComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndTwoInteger.class, true));
 
         job.setNumReduceTasks(calNumTasks());
         job.setReducerClass(InverserReducer.class);

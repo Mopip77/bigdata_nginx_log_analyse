@@ -1,3 +1,4 @@
+import org.apache.hadoop.io.Text;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import properties.MyProperties;
 
@@ -30,7 +31,10 @@ public class Test {
     }
 
     @org.junit.Test
-    public void h3a() {
-//        DateAndSomeThingComaratorFactory
+    public void hadf() {
+        Text wadf = new Text("wadf");
+        Text wadf2 = new Text("wadfzxcv");
+        int i = wadf.compareTo(wadf2);
+        System.out.println(i);
     }
 }
