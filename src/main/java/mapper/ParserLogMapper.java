@@ -66,13 +66,6 @@ public class ParserLogMapper extends Mapper<LongWritable, Text, LogItem, IntWrit
             Integer flux = fluxPre.equals("-") ? 0 : Integer.valueOf(fluxPre);
 
             return new LogItem(ip, date, uri, statusCode, flux);
-
-//            StringBuilder sb = new StringBuilder();
-//            sb.append(ip).append(LOG_SPLITTER)
-//                    .append(date).append(LOG_SPLITTER)
-//                    .append(uri).append(LOG_SPLITTER)
-//                    .append(statusCode).append(LOG_SPLITTER)
-//                    .append(flux);
         }
         return null;
     }

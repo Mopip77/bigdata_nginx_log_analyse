@@ -1,7 +1,6 @@
 package job;
 
 import comparator.DateAndSomeThingComaratorFactory;
-import comparator.SomeThingOfDateAndSomeThingComparator;
 import mapper.ParserLogMapper;
 import mapper.UriExtractor;
 import model.TimePeriodAndText;
@@ -38,7 +37,7 @@ public class UriStaticsJob extends MyJob {
 
         job.setNumReduceTasks(calNumTasks());
         job.setPartitionerClass(TimePeriodPartitioner.class);
-        job.setGroupingComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndText.class, false));
+        job.setGroupingComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndText.class, false, false));
 
         ChainReducer.setReducer(job, UriStaticsReducer.class, TimePeriodAndText.class, LogItem.class, TimePeriodAndText.class, Text.class, new Configuration(false));
 

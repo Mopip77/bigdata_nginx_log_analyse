@@ -10,6 +10,7 @@ import java.util.Properties;
 public class MyProperties {
     private Properties pro;
     private FileInputStream in;
+    SimpleDateFormat simpleDateFormat;
 
 
     private static MyProperties  ourInstance;
@@ -29,7 +30,7 @@ public class MyProperties {
 
     private void preProcess() {
         String startTime = pro.getProperty("startTime");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
 
         try {
             Date startTimeDate = simpleDateFormat.parse(startTime);
@@ -60,5 +61,13 @@ public class MyProperties {
 
     public Properties getPro() {
         return pro;
+    }
+
+    public void parserTime() {
+
+    }
+
+    public String formatTime(Long timeStampSecond) {
+        return simpleDateFormat.format(new Date(timeStampSecond * 1000));
     }
 }

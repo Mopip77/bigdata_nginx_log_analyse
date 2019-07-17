@@ -3,17 +3,17 @@ package channel;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NextStepMessage {
+public class NextStepMessageList {
 
     private List<String> messages;
 
-    private static NextStepMessage ourInstance = new NextStepMessage();
+    private static NextStepMessageList ourInstance = new NextStepMessageList();
 
-    public static NextStepMessage getInstance() {
+    public static NextStepMessageList getInstance() {
         return ourInstance;
     }
 
-    private NextStepMessage() {
+    private NextStepMessageList() {
         messages = new LinkedList<String>();
     }
 

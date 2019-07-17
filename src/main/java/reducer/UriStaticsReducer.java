@@ -1,6 +1,7 @@
 package reducer;
 
-import channel.NextStepMessage;
+import channel.NextStepMessageList;
+import channel.NextStepMessageMap;
 import model.TimePeriodAndText;
 import model.LogItem;
 import org.apache.hadoop.io.Text;
@@ -17,14 +18,21 @@ public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimeP
     private long totalUriCount = 0;
     private long totalVisitedCount = 0;
     private String info;
+    private Integer partition;
+    private Boolean flag = false;
 
-    private static String  startTime = (String) MyProperties.getInstance().getPro().get("startTime");
-    private static String  endTime =  (String) MyProperties.getInstance().getPro().get("endTime");
+    private static long startTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("startTimeTimeStamp"));
+    private static long endTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("endTimeTimeStamp"));
+    private static int timePeriod = Integer.valueOf(MyProperties.getInstance().getPro().getProperty("timePeriod"));
 
-    @Override
-    protected void setup(Context context) throws IOException, InterruptedException {
-        info = "---------------\nstartTime: " + startTime + "\nendTime: " + endTime + "\n----------------";
-        context.write(null, new Text(info));
+    protected void initHeader(Context context) throws IOException, InterruptedException {
+        TimePeriodAndText currentKey = context.getCurrentKey();
+        if (currentKey != null) {
+            partition = currentKey.getPeriod();
+            long segmentStartTime = startTime + timePeriod * partition;
+            info = "---------------\nstartTime: " + MyProperties.getInstance().formatTime(segmentStartTime) + "\nendTime: " + MyProperties.getInstance().formatTime(segmentStartTime + timePeriod) + "\n----------------";
+            context.write(null, new Text(info));
+        }
     }
 
     /**
@@ -38,6 +46,11 @@ public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimeP
      */
     @Override
     protected void reduce(TimePeriodAndText key, Iterable<LogItem> values, Context context) throws IOException, InterruptedException {
+        if (!flag) {
+            initHeader(context);
+            flag = true;
+        }
+
         Set uniqueIpSet = new HashSet();
         int uriVisitedCount = 0;
         for (LogItem value : values) {
@@ -55,7 +68,7 @@ public class UriStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimeP
     @Override
     protected void cleanup(Context context) throws IOException, InterruptedException {
         String endInfo = "\ntotalIpCount: " + totalIpCount + " totalUriCount: " + totalUriCount + " totalVisitedCount: " + totalVisitedCount + "\n------------------";
-        NextStepMessage.getInstance().append("\n"+info+endInfo);
+        NextStepMessageMap.getInstance().write(partition, "\n"+info+endInfo);
         context.write(null, new Text(endInfo));
     }
 }

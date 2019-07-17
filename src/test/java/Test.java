@@ -1,4 +1,6 @@
+import comparator.DateAndSomeThingComaratorFactory;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.yarn.webapp.hamlet2.Hamlet;
 import org.apache.http.impl.cookie.BrowserCompatSpecFactory;
 import properties.MyProperties;
 
@@ -6,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Test {
     @org.junit.Test
@@ -30,11 +34,18 @@ public class Test {
         }
     }
 
+    private static class HH {}
+
     @org.junit.Test
     public void hadf() {
-        Text wadf = new Text("wadf");
-        Text wadf2 = new Text("wadfzxcv");
-        int i = wadf.compareTo(wadf2);
-        System.out.println(i);
+        Pattern pattern = Pattern.compile("^/(thread|forum|space)-");
+        String uri = "/thread-12312312.vxcvd";
+        Matcher matcher = pattern.matcher(uri);
+        if (matcher.find()) {
+            String group = matcher.group(1);
+            System.out.println(group);
+        }
     }
+
+
 }

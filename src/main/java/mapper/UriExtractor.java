@@ -8,6 +8,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import properties.MyProperties;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UriExtractor extends Mapper<LogItem, IntWritable, TimePeriodAndText, LogItem> {
 
@@ -19,20 +21,27 @@ public class UriExtractor extends Mapper<LogItem, IntWritable, TimePeriodAndText
         Long date = key.getDate();
         int periodNum = (int) ((date - startTime) / timePeriod);
         TimePeriodAndText extractKey = new TimePeriodAndText(timePeriod == 0 ? 0 : periodNum, new Text(key.getUri()));
-//        System.out.println("==============>"+extractKey.getItem());
+
+        // url 解析
+        String uri = extractKey.getItem().toString();
+        // 不是/i (i为\\w) 的都不统计
+        if (!Pattern.compile("^/\\w").matcher(uri).find())
+            return;
+
         String uriFolder = null;
-        int secondSplitterIndex = extractKey.getItem().toString().indexOf("/", 1);
-        if (secondSplitterIndex < 0)
-            secondSplitterIndex = extractKey.getItem().toString().indexOf("?", 1);
-        if (secondSplitterIndex < 0)
-            secondSplitterIndex = extractKey.getItem().toString().length();
-        uriFolder = extractKey.getItem().toString().substring(0, secondSplitterIndex);
-//        uriFolder = extractKey.getItem().("/[^/]*$")[0];
-//        try {
-//            uriFolder = extractKey.getItem().split("/[^/]*$")[0];
-//        } catch (Exception e) {
-//            uriFolder = extractKey.getItem().split("\\?", 2)[0];
-//        }
+        // thread forum space格式特殊先解析一次
+        Pattern pattern = Pattern.compile("^/(thread|forum|space)-");
+        Matcher matcher = pattern.matcher(uri);
+        if (matcher.find()) {
+            uriFolder = "/" + matcher.group(1);
+        } else {
+            int secondSplitterIndex = uri.indexOf("/", 1);
+            if (secondSplitterIndex < 0)
+                secondSplitterIndex = uri.indexOf("?", 1);
+            if (secondSplitterIndex < 0)
+                secondSplitterIndex = uri.length();
+            uriFolder = uri.substring(0, secondSplitterIndex);
+        }
         extractKey.setItem(new Text(uriFolder));
         context.write(extractKey, key);
     }
