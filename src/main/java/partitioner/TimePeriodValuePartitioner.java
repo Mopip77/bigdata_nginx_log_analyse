@@ -1,7 +1,6 @@
 package partitioner;
 
 import model.TimePeriodAndSomething;
-import model.LogItem;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.mapreduce.Partitioner;
@@ -15,12 +14,12 @@ import properties.MyProperties;
  */
 @InterfaceAudience.Public
 @InterfaceStability.Stable
-public class TimePeriodPartitioner extends Partitioner<TimePeriodAndSomething, Object> {
+public class TimePeriodValuePartitioner extends Partitioner<Object, TimePeriodAndSomething> {
     // 配置文件读入
 //    private static final long startTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("startTimeTimeStamp"));
     private static final int timePeriod = Integer.valueOf(MyProperties.getInstance().getPro().getProperty("timePeriod"));
 
-    public int getPartition(TimePeriodAndSomething timePeriodAndSomething, Object object, int numPartitions) {
+    public int getPartition(Object object, TimePeriodAndSomething timePeriodAndSomething, int numPartitions) {
         return timePeriod == 0 ? 0 : timePeriodAndSomething.getPeriod() % numPartitions;
     }
 }

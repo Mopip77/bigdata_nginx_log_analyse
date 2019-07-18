@@ -29,6 +29,23 @@ public class TwoInteger implements WritableComparable<TwoInteger> {
         return a2.compareTo(o.getA2());
     }
 
+    public static int compare(TwoInteger o1, TwoInteger o2, boolean inverse, int mainkey) {
+        Integer a1 = o1.getA1(); Integer a2 = o1.getA2();
+        int compare = 0;
+        if (mainkey == 1) {
+            compare = a2.compareTo(o2.getA2());
+        }
+
+        if (compare == 0) {
+            compare = a1.compareTo(o2.getA1());
+            if (compare == 0) {
+                compare = a2.compareTo(o2.getA2());
+            }
+        }
+
+        return (inverse ? -1 : 1) * compare;
+    }
+
     public void write(DataOutput out) throws IOException {
         out.writeInt(a1);
         out.writeInt(a2);

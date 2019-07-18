@@ -25,6 +25,9 @@ public abstract class MyJob {
         long startTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("startTimeTimeStamp"));
         long endTime = Long.valueOf(MyProperties.getInstance().getPro().getProperty("endTimeTimeStamp"));
         int timePeriod = Integer.valueOf(MyProperties.getInstance().getPro().getProperty("timePeriod"));
+        if (timePeriod == 0)
+            return 1;
+
         int numTasks = 3;
         if (endTime != 0) {
             numTasks = (int) ((endTime - startTime - 1) / timePeriod + 1);

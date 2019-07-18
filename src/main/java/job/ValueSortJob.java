@@ -1,16 +1,22 @@
 package job;
 
-import comparator.DateAndSomeThingComaratorFactory;
+import comparator.SomeThingOfDateAndSomeThingComaratorFactory;
+import comparator.TwoIntegerComparatorFactory;
+import comparator.WritableInverseComparatorFactory;
+import mapper.IpStaticsParserMapper;
 import mapper.UriStaticsParserMapper;
-import model.TimePeriodAndTwoInteger;
+import model.ThreeInteger;
+import model.TimePeriodAndText;
 import model.TwoInteger;
+import myenum.StaticSortMainkey;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import partitioner.TimePeriodPartitioner;
+import partitioner.TimePeriodValuePartitioner;
 import reducer.InverserReducer;
 
 import java.io.IOException;
@@ -27,18 +33,40 @@ public class ValueSortJob extends MyJob {
         job.setJarByClass(driver);
 
         job.setMapperClass(UriStaticsParserMapper.class);
-        job.setMapOutputKeyClass(TimePeriodAndTwoInteger.class);
-        job.setMapOutputValueClass(Text.class);
+        job.setMapOutputKeyClass(ThreeInteger.class);
+        job.setMapOutputValueClass(TimePeriodAndText.class);
 
-        job.setPartitionerClass(TimePeriodPartitioner.class);
+        job.setPartitionerClass(TimePeriodValuePartitioner.class);
         // TODO
-//        job.setSortComparatorClass(TwoIntegerComparatorFactory.class);
-        job.setSortComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndTwoInteger.class, true, true));
+        configuration.setEnum("mainkey", StaticSortMainkey.FLUXCOUNT);
+        job.setSortComparatorClass(ThreeInteger.getComparator(true, StaticSortMainkey.FLUXCOUNT.getKey()));
 
         job.setNumReduceTasks(calNumTasks());
         job.setReducerClass(InverserReducer.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(TwoInteger.class);
+        job.setOutputValueClass(ThreeInteger.class);
+
+        FileInputFormat.setInputPaths(job, new Path(srcPath));
+        FileOutputFormat.setOutputPath(job, new Path(destPath));
+    }
+
+    public void setup(String srcPath, String destPath, Class driver, Class sortComparator) throws IOException {
+        configuration = new Configuration();
+        job = Job.getInstance(configuration, JOB_NAME);
+        job.setJarByClass(driver);
+
+        job.setMapperClass(IpStaticsParserMapper.class);
+        job.setMapOutputKeyClass(IntWritable.class);
+        job.setMapOutputValueClass(TimePeriodAndText.class);
+
+        job.setPartitionerClass(TimePeriodValuePartitioner.class);
+        // TODO
+        job.setSortComparatorClass(WritableInverseComparatorFactory.getComparator(IntWritable.class));
+
+        job.setNumReduceTasks(calNumTasks());
+        job.setReducerClass(InverserReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
         FileInputFormat.setInputPaths(job, new Path(srcPath));
         FileOutputFormat.setOutputPath(job, new Path(destPath));

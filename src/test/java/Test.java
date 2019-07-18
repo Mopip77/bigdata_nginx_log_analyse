@@ -27,11 +27,9 @@ public class Test {
 
     @org.junit.Test
     public void ha() {
-        String a = "asdf/zxcv/ewf/svxc.fsd";
-        String[] split = a.split("/[^/]*$");
-        for (String s : split) {
-            System.out.println(s);
-        }
+        String a = "/home.php?mod=space&uid=3536&do=thread&type=reply&view=me&from=spac";
+        int i = a.indexOf("?", 1);
+        System.out.println(i);
     }
 
     private static class HH {}

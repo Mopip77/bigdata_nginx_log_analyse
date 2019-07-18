@@ -1,16 +1,15 @@
 package mapper;
 
-import model.ThreeInteger;
 import model.TimePeriodAndText;
-import model.TimePeriodAndTwoInteger;
 import model.TwoInteger;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class UriStaticsParserMapper extends Mapper<LongWritable, Text, ThreeInteger, TimePeriodAndText> {
+public class IpStaticsParserMapper extends Mapper<LongWritable, Text, IntWritable, TimePeriodAndText> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String s = value.toString();
@@ -18,19 +17,15 @@ public class UriStaticsParserMapper extends Mapper<LongWritable, Text, ThreeInte
 
         Integer partition = null;
         String uri = null;
-        Integer a = null;
-        Integer b = null;
-        Integer c = null;
+        Integer count = null;
         try {
             partition = Integer.valueOf(split[0]);
             uri = split[1];
-            a = Integer.valueOf(split[2]);
-            b = Integer.valueOf(split[3]);
-            c = Integer.valueOf(split[4]);
+            count = Integer.valueOf(split[2]);
         } catch (Exception e) {
             return;
         }
-        if (a != null && b != null && c != null)
-            context.write(new ThreeInteger(a, b, c), new TimePeriodAndText(partition, new Text(uri)));
+        if (count != null)
+            context.write(new IntWritable(count), new TimePeriodAndText(partition, new Text(uri)));
     }
 }

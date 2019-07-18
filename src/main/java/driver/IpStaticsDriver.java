@@ -1,7 +1,8 @@
 package driver;
 
+import comparator.WritableInverseComparatorFactory;
+import job.IpStaticsJob;
 import job.MyJob;
-import job.UriStaticsJob;
 import job.ValueSortJob;
 import org.apache.log4j.BasicConfigurator;
 
@@ -19,11 +20,11 @@ public class IpStaticsDriver {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         BasicConfigurator.configure();
-        MyJob parserJob = new UriStaticsJob();
+        MyJob parserJob = new IpStaticsJob();
         parserJob.setup(args[0], getTmpFolder(true), IpStaticsDriver.class);
 
-        MyJob valueSortJob = new ValueSortJob();
-        valueSortJob.setup(getTmpFolder(false), args[1], IpStaticsDriver.class);
+        ValueSortJob valueSortJob = new ValueSortJob();
+        valueSortJob.setup(getTmpFolder(false), args[1], IpStaticsDriver.class, WritableInverseComparatorFactory.class);
 
         if (parserJob.run()) {
             System.exit(valueSortJob.run() ? 0 : 1);

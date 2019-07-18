@@ -2,6 +2,7 @@ package mapper;
 
 import model.TimePeriodAndText;
 import model.LogItem;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -40,7 +41,7 @@ public class UriExtractor extends Mapper<LogItem, IntWritable, TimePeriodAndText
                 secondSplitterIndex = uri.indexOf("?", 1);
             if (secondSplitterIndex < 0)
                 secondSplitterIndex = uri.length();
-            uriFolder = uri.substring(0, secondSplitterIndex);
+            uriFolder = StringUtils.substring(uri, 0, secondSplitterIndex);
         }
         extractKey.setItem(new Text(uriFolder));
         context.write(extractKey, key);
