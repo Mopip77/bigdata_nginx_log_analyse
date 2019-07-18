@@ -1,0 +1,63 @@
+
+---------------
+startTime: 2015-03-30-18:38:20
+endTime: 2015-03-30-19:08:20
+----------------
+totalIpCount: 3611 totalUriCount: 54 totalVisitedCount: 33401 totalFluxCount: 388048114
+------------------
+sort by [flux count]
+-------------------
+/forum.php	1958	329	105150877
+/data	2285	266	80639357
+/thread	788	287	78673969
+/static	16011	325	52417753
+/forum	230	109	20889979
+/uc_server	6166	219	16317381
+/home.php	1983	465	13829928
+/member.php	331	118	4973525
+/api	174	87	4075237
+/space	220	128	3160627
+/template	317	87	2037693
+/source	1078	186	1172246
+/search.php	39	20	877982
+/api.php	912	528	815379
+/favicon.ico	115	107	785310
+/archiver	196	78	572852
+/splugin.php	31	7	518507
+/misc.php	190	45	422719
+/plugin.php	21	11	183670
+/connect.php	62	20	169849
+/ask.php	1	1	82218
+/images	75	38	56470
+/robots.txt	94	82	54371
+/home.php?mod=space&uid=77704&do=friend&view=me&from=space	1	1	26503
+/cp.php	2	2	25365
+/heimaedm.html	1	1	17594
+/blog-7054-423.html	1	1	17198
+/blog-6421-256.html	1	1	16890
+/forum.php?mod=post&action=newthread&fid=53&referer=http%3A	1	1	16002
+/home.php?mod=misc&ac=emailcheck&hash=a7102AbbAVaFgvR5t6Yo9bLlrZPHjNGwr5BTdZFe	1	1	14004
+/home.php?mod=misc&ac=emailcheck&hash=37a9AmQwIXsEAq8nm826eHUbHUkw	1	1	13996
+/none	20	9	4040
+/reg.jsp	15	15	3630
+/none.png	12	1	2472
+/register.php	8	2	1680
+/http:	7	5	1654
+/logging.php	7	1	1463
+/member.jsp	7	1	1456
+/xwb	6	4	1358
+/f	6	1	1236
+/u	2	2	462
+/Feedback.asp	2	1	420
+/pm.jsp	2	2	408
+/my.jsp	2	2	408
+/type=slide&mini=1&img=7&pos=left&uid=6478341	1	1	258
+/pageContent	1	1	238
+/wmff_wxyun-wmff_wxyun.html	1	1	224
+/admin	1	1	213
+/redirect.jsp	1	1	210
+/download.htm	1	1	210
+/club	1	1	209
+/mailto:	1	1	209
+/reg.php	1	1	205
+/index.php	10	4	0

@@ -1,0 +1,67 @@
+
+---------------
+startTime: 2015-03-30-18:08:20
+endTime: 2015-03-30-18:38:20
+----------------
+totalIpCount: 3490 totalUriCount: 58 totalVisitedCount: 32956 totalFluxCount: 347298770
+------------------
+sort by [flux count]
+-------------------
+/thread	856	282	83383972
+/data	2132	259	81886589
+/forum.php	2036	378	63165285
+/static	16065	316	49860857
+/forum	219	99	18868150
+/uc_server	5923	219	16148997
+/home.php	1677	463	12076280
+/member.php	393	127	5865619
+/api	204	98	5503647
+/template	363	88	2446449
+/space	178	102	2418727
+/splugin.php	68	3	1129389
+/source	1091	186	1025185
+/favicon.ico	133	113	814470
+/api.php	902	476	812252
+/archiver	214	94	583446
+/search.php	12	3	248271
+/ask.php	2	2	163319
+/cp.php	8	5	101463
+/connect.php	96	25	86889
+/forum.php?mod=post&action=newthread&fid=53&referer=http%3A	1	1	60806
+/admin.php	4	1	56955
+/plugin.php	8	3	52551
+/images	75	39	47666
+/home.php?mod=space&uid=24798&do=thread&view=me&type=reply&order=dateline&from=space&page=5	1	1	46840
+/home.php?mod=space&uid=20317&do=thread&view=me&type=reply&order=dateline&from=space&page=2	1	1	46510
+/home.php?mod=space&uid=21708&do=thread&view=me&type=reply&order=dateline&from=space&page=2	1	1	45941
+/home.php?mod=space&uid=26651&do=thread&type=reply&view=me&from=space	1	1	44509
+/home.php?mod=space&uid=24798&do=thread&type=reply&view=me&from=space	1	1	44172
+/home.php?mod=space&uid=24798&do=thread&view=me&type=reply&order=dateline&from=space&page=2	1	1	43687
+/misc.php	120	31	40593
+/home.php?mod=space&uid=3536&do=thread&type=reply&view=me&from=space	1	1	40188
+/portal.php	4	2	35381
+/home.php?mod=space&uid=22078&do=thread&view=me&from=space	1	1	32389
+/heimaedm.html	1	1	17594
+/question	67	2	16415
+/home.php?mod=misc&ac=emailcheck&hash=c0b3yvQjyLuTVoI4	1	1	14003
+/robots.txt	15	13	8730
+/reg.jsp	18	17	4356
+/none	12	7	2424
+/register.php	9	2	1890
+/logging.php	9	2	1881
+/viewthread.php	3	1	636
+/xwb	2	2	456
+/redirect.jsp	2	2	420
+/articles	1	1	222
+/programmer	1	1	218
+/internet	1	1	214
+/java_adv	1	1	212
+/viewthread.jsp	1	1	212
+/log	1	1	211
+/tag	1	1	210
+/space.jsp	1	1	207
+/forum.do	1	1	206
+/for%20.%20	1	1	205
+/pm.jsp	1	1	204
+/G	1	1	200
+/index.php	13	5	0

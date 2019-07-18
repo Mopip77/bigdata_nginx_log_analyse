@@ -6,6 +6,7 @@ import mapper.ParserLogMapper;
 import mapper.UriExtractor;
 import model.LogItem;
 import model.TimePeriodAndText;
+import model.TwoInteger;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -17,6 +18,7 @@ import org.apache.hadoop.mapreduce.lib.chain.ChainReducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import partitioner.TimePeriodKeyPartitioner;
+import reducer.IpDetailStaticsReducer;
 import reducer.IpStaticsReducer;
 import reducer.UriStaticsReducer;
 
@@ -41,7 +43,8 @@ public class IpStaticsJob extends MyJob {
         job.setPartitionerClass(TimePeriodKeyPartitioner.class);
         job.setGroupingComparatorClass(DateAndSomeThingComaratorFactory.getComparator(TimePeriodAndText.class, false, false));
 
-        ChainReducer.setReducer(job, IpStaticsReducer.class, TimePeriodAndText.class, LogItem.class, TimePeriodAndText.class, IntWritable.class, new Configuration(false));
+        ChainReducer.setReducer(job, IpDetailStaticsReducer.class, TimePeriodAndText.class, LogItem.class, TimePeriodAndText.class, TwoInteger.class, new Configuration(false));
+//        ChainReducer.setReducer(job, IpStaticsReducer.class, TimePeriodAndText.class, LogItem.class, TimePeriodAndText.class, TwoInteger.class, new Configuration(false));
 
         FileInputFormat.setInputPaths(job, new Path(srcPath));
         FileOutputFormat.setOutputPath(job, new Path(destPath));

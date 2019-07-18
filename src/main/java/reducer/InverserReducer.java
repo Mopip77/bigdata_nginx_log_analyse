@@ -1,11 +1,11 @@
 package reducer;
 
-import channel.NextStepMessageList;
 import channel.NextStepMessageMap;
+import model.ThreeInteger;
 import model.TimePeriodAndText;
-import model.TimePeriodAndTwoInteger;
-import model.TwoInteger;
-import myenum.StaticSortMainkey;
+import myenum.SortMainkey;
+import myenum.VFSortMainkey;
+import myenum.VIFSortMainkey;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -21,9 +21,10 @@ public class InverserReducer extends Reducer<Object, TimePeriodAndText, Text, Ob
         if (currentValue != null) {
             String formerMessage = NextStepMessageMap.getInstance().read(currentValue.getPeriod());
             context.write(new Text(formerMessage), null);
-            StaticSortMainkey mainkey = context.getConfiguration().getEnum("mainkey", StaticSortMainkey.IPCOUNT);
-            context.write(new Text("sort by [" + mainkey.getName() + "]\n-------------------"), null);
-        }
+
+            String mainkey = context.getConfiguration().get("mainkey");
+            context.write(new Text("sort by [" + mainkey + "]\n-------------------"), null);
+            }
     }
 
     @Override

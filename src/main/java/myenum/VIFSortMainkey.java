@@ -1,6 +1,6 @@
 package myenum;
 
-public enum StaticSortMainkey {
+public enum VIFSortMainkey implements SortMainkey {
     VISITCOUNT("visit count", 0),
     IPCOUNT("unique ip count", 1),
     FLUXCOUNT("flux count", 2);
@@ -9,7 +9,7 @@ public enum StaticSortMainkey {
     private int key;
 
 
-    StaticSortMainkey(String name, int key) {
+    VIFSortMainkey(String name, int key) {
         this.name = name;
         this.key = key;
     }

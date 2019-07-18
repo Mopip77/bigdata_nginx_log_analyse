@@ -22,12 +22,19 @@ public class UriExtractor extends Mapper<LogItem, IntWritable, TimePeriodAndText
         Long date = key.getDate();
         int periodNum = (int) ((date - startTime) / timePeriod);
         TimePeriodAndText extractKey = new TimePeriodAndText(timePeriod == 0 ? 0 : periodNum, new Text(key.getUri()));
-
-        // url 解析
         String uri = extractKey.getItem().toString();
+        String uriFolder = getUriFolder(uri);
+        if (uriFolder == null) return;
+
+        extractKey.setItem(new Text(uriFolder));
+        context.write(extractKey, key);
+    }
+
+    public static String getUriFolder(String uri) {
+        // url 解析
         // 不是/i (i为\\w) 的都不统计
         if (!Pattern.compile("^/\\w").matcher(uri).find())
-            return;
+            return null;
 
         String uriFolder = null;
         // thread forum space格式特殊先解析一次
@@ -43,7 +50,6 @@ public class UriExtractor extends Mapper<LogItem, IntWritable, TimePeriodAndText
                 secondSplitterIndex = uri.length();
             uriFolder = StringUtils.substring(uri, 0, secondSplitterIndex);
         }
-        extractKey.setItem(new Text(uriFolder));
-        context.write(extractKey, key);
+        return uriFolder;
     }
 }

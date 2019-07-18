@@ -1,14 +1,14 @@
 package job;
 
-import comparator.SomeThingOfDateAndSomeThingComaratorFactory;
 import comparator.TwoIntegerComparatorFactory;
-import comparator.WritableInverseComparatorFactory;
 import mapper.IpStaticsParserMapper;
 import mapper.UriStaticsParserMapper;
 import model.ThreeInteger;
 import model.TimePeriodAndText;
 import model.TwoInteger;
-import myenum.StaticSortMainkey;
+import myenum.SortMainkey;
+import myenum.VFSortMainkey;
+import myenum.VIFSortMainkey;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -18,6 +18,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import partitioner.TimePeriodValuePartitioner;
 import reducer.InverserReducer;
+import reducer.IpDetailStaticsReducer;
 
 import java.io.IOException;
 
@@ -29,6 +30,9 @@ public class ValueSortJob extends MyJob {
 
     public void setup(String srcPath, String destPath, Class driver) throws IOException {
         configuration = new Configuration();
+        SortMainkey mainkey = VIFSortMainkey.FLUXCOUNT;
+        configuration.set("mainkey", mainkey.getName());
+
         job = Job.getInstance(configuration, JOB_NAME);
         job.setJarByClass(driver);
 
@@ -38,8 +42,7 @@ public class ValueSortJob extends MyJob {
 
         job.setPartitionerClass(TimePeriodValuePartitioner.class);
         // TODO
-        configuration.setEnum("mainkey", StaticSortMainkey.FLUXCOUNT);
-        job.setSortComparatorClass(ThreeInteger.getComparator(true, StaticSortMainkey.FLUXCOUNT.getKey()));
+        job.setSortComparatorClass(ThreeInteger.getComparator(true, mainkey.getKey()));
 
         job.setNumReduceTasks(calNumTasks());
         job.setReducerClass(InverserReducer.class);
@@ -52,16 +55,19 @@ public class ValueSortJob extends MyJob {
 
     public void setup(String srcPath, String destPath, Class driver, Class sortComparator) throws IOException {
         configuration = new Configuration();
+        SortMainkey mainkey = VFSortMainkey.FLUXCOUNT;
+        configuration.set("mainkey", mainkey.getName());
         job = Job.getInstance(configuration, JOB_NAME);
         job.setJarByClass(driver);
 
         job.setMapperClass(IpStaticsParserMapper.class);
-        job.setMapOutputKeyClass(IntWritable.class);
+        job.setMapOutputKeyClass(TwoInteger.class);
         job.setMapOutputValueClass(TimePeriodAndText.class);
 
         job.setPartitionerClass(TimePeriodValuePartitioner.class);
         // TODO
-        job.setSortComparatorClass(WritableInverseComparatorFactory.getComparator(IntWritable.class));
+        System.out.println(configuration.hashCode());
+        job.setSortComparatorClass(TwoInteger.getComparator(true, mainkey.getKey()));
 
         job.setNumReduceTasks(calNumTasks());
         job.setReducerClass(InverserReducer.class);

@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class TwoInteger implements WritableComparable<TwoInteger> {
 
+    private static final String className = TwoInteger.class.getName();
+
     private Integer a1;
     private Integer a2;
 
@@ -44,6 +46,74 @@ public class TwoInteger implements WritableComparable<TwoInteger> {
         }
 
         return (inverse ? -1 : 1) * compare;
+    }
+
+    private static class Comparator extends WritableComparator {
+        public Comparator() {
+            super(TwoInteger.class, true);
+        }
+
+        @Override
+        public int compare(WritableComparable a, WritableComparable b) {
+            TwoInteger a1 = (TwoInteger) a;
+            TwoInteger b1 = (TwoInteger) b;
+            return TwoInteger.compare(a1, b1, false, 0);
+        }
+    }
+
+    private static class ReverseComparator extends WritableComparator {
+        public ReverseComparator() {
+            super(TwoInteger.class, true);
+        }
+
+        @Override
+        public int compare(WritableComparable a, WritableComparable b) {
+            TwoInteger a1 = (TwoInteger) a;
+            TwoInteger b1 = (TwoInteger) b;
+            return TwoInteger.compare(a1, b1, true, 0);
+        }
+    }
+
+    private static class Mainkey1Comparator extends WritableComparator {
+        public Mainkey1Comparator() {
+            super(TwoInteger.class, true);
+        }
+
+        @Override
+        public int compare(WritableComparable a, WritableComparable b) {
+            TwoInteger a1 = (TwoInteger) a;
+            TwoInteger b1 = (TwoInteger) b;
+            return TwoInteger.compare(a1, b1, false, 1);
+        }
+    }
+
+    private static class Mainkey1ReverseComparator extends WritableComparator {
+        public Mainkey1ReverseComparator() {
+            super(TwoInteger.class, true);
+        }
+
+        @Override
+        public int compare(WritableComparable a, WritableComparable b) {
+            TwoInteger a1 = (TwoInteger) a;
+            TwoInteger b1 = (TwoInteger) b;
+            return TwoInteger.compare(a1, b1, true, 1);
+        }
+    }
+
+    public static Class getComparator(boolean reverse, int mainkey) {
+        String comparatorClassName;
+        if (mainkey == 0) {
+            comparatorClassName = className + "$" + (reverse ? "Reverse" : "") + "Comparator";
+        } else {
+
+            comparatorClassName = className + "$" + "Mainkey" + mainkey + (reverse ? "Reverse" : "") + "Comparator";
+        }
+        try {
+            return Class.forName(comparatorClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void write(DataOutput out) throws IOException {

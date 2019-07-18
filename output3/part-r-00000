@@ -1,0 +1,48 @@
+---------------
+startTime: 2015-03-30-17:38:20
+endTime: 2015-03-30-18:08:20
+----------------
+totalIpCount: 3868 totalUriCount: 40 totalVisitedCount: 35948 totalFluxCount: 382492722
+------------------
+sort by [flux count]
+-------------------
+/data	2291	310	98662251
+/thread	836	372	86810992
+/static	17700	348	60161556
+/forum.php	2057	394	59700685
+/forum	252	107	22944735
+/uc_server	6864	219	20693844
+/home.php	1821	513	10831424
+/api	238	109	7134975
+/member.php	376	142	5414083
+/space	152	97	1853232
+/template	325	77	1795640
+/source	1146	204	1410747
+/favicon.ico	137	126	975494
+/search.php	40	16	910860
+/api.php	975	547	863854
+/ask.php	8	4	652197
+/admin.php	29	1	480389
+/archiver	180	109	476146
+/splugin.php	18	6	303280
+/plugin.php	9	6	115681
+/connect.php	117	27	94324
+/misc.php	195	28	55913
+/images	76	40	39390
+/cp.php	3	3	38813
+/forum.php?mod=post&action=newthread&fid=61&referer=http%3A	1	1	16965
+/portal.php	1	1	16920
+/home.php?mod=misc&ac=emailcheck&hash=6530ZzzhcebH3nAD6thOZ5eEgzseJIgaKfgzFOzq8JgaEwd0DcqOQmQCf0WOBh34RU4WIIEPlOp	1	1	14004
+/robots.txt	10	8	5820
+/reg.jsp	23	22	5566
+/none	24	12	4848
+/question	13	1	3185
+/download	5	3	1111
+/register.php	5	2	1050
+/logging.php	5	2	1045
+/Default.aspx	3	1	630
+/redirect.jsp	2	2	420
+/xwb	1	1	228
+/FORUM-60-1.HTML	1	1	213
+/ip	1	1	212
+/index.php	7	4	0

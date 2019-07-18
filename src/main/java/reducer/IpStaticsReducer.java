@@ -3,6 +3,7 @@ package reducer;
 import channel.NextStepMessageMap;
 import model.LogItem;
 import model.TimePeriodAndText;
+import model.TwoInteger;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -12,8 +13,9 @@ import javax.swing.plaf.ViewportUI;
 import java.io.IOException;
 import java.util.Map;
 
-public class IpStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimePeriodAndText, IntWritable> {
+public class IpStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimePeriodAndText, TwoInteger> {
     private long totalIpCount = 0;
+    private long totalFluxCount = 0;
     private int partition;
     private boolean flag = false;
     private String info;
@@ -28,12 +30,15 @@ public class IpStaticsReducer extends Reducer<TimePeriodAndText, LogItem, TimePe
         }
 
         int visitedCount = 0;
+        int fluxCount = 0;
         for (LogItem value : values) {
             visitedCount++;
+            fluxCount += value.getFlux();
         }
 
         totalIpCount++;
-        context.write(new TimePeriodAndText(partition, key.getItem()), new IntWritable(visitedCount));
+        totalFluxCount += fluxCount;
+        context.write(new TimePeriodAndText(partition, key.getItem()), new TwoInteger(visitedCount, fluxCount));
     }
 
     @Override

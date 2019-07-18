@@ -1,0 +1,41 @@
+
+---------------
+startTime: 2015-03-30-19:08:20
+endTime: 2015-03-30-19:24:20
+----------------
+totalIpCount: 958 totalUriCount: 32 totalVisitedCount: 7036 totalFluxCount: 57534506
+------------------
+sort by [flux count]
+-------------------
+/data	388	70	13333288
+/thread	141	81	12605944
+/static	3730	105	10901417
+/forum.php	327	99	7421437
+/forum	60	41	4847199
+/uc_server	1236	50	2874271
+/home.php	297	121	1637541
+/template	128	27	855008
+/space	56	36	807186
+/member.php	54	31	753007
+/api	32	27	498159
+/search.php	17	6	193099
+/source	223	51	177125
+/ask.php	2	2	162932
+/favicon.ico	27	25	161402
+/api.php	133	96	137324
+/archiver	42	33	121656
+/images	25	17	15919
+/member.jsp	58	1	12064
+/robots.txt	15	15	8730
+/misc.php	18	7	4455
+/none	7	4	1414
+/reg.jsp	4	3	968
+/space.jsp	4	1	828
+/redirect.jsp	3	1	630
+/none.png	2	1	412
+/file:	1	1	237
+/xwb	1	1	228
+/register.php	1	1	210
+/logging.php	1	1	209
+/download	1	1	207
+/index.php	2	2	0

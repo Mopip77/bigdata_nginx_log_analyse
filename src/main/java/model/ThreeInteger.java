@@ -43,7 +43,7 @@ public class ThreeInteger implements WritableComparable<ThreeInteger> {
         if (mainKey == 1) {
             compare = a2.compareTo(o2.getA2());
         } else if (mainKey == 2) {
-            compare = a2.compareTo(o2.getA2());
+            compare = a3.compareTo(o2.getA3());
         }
 
         if (compare == 0) {

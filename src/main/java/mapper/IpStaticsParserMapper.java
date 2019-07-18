@@ -9,7 +9,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class IpStaticsParserMapper extends Mapper<LongWritable, Text, IntWritable, TimePeriodAndText> {
+public class IpStaticsParserMapper extends Mapper<LongWritable, Text, TwoInteger, TimePeriodAndText> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         String s = value.toString();
@@ -17,15 +17,17 @@ public class IpStaticsParserMapper extends Mapper<LongWritable, Text, IntWritabl
 
         Integer partition = null;
         String uri = null;
-        Integer count = null;
+        Integer visitCount = null;
+        Integer fluxCount = null;
         try {
             partition = Integer.valueOf(split[0]);
             uri = split[1];
-            count = Integer.valueOf(split[2]);
+            visitCount = Integer.valueOf(split[2]);
+            fluxCount = Integer.valueOf(split[3]);
         } catch (Exception e) {
             return;
         }
-        if (count != null)
-            context.write(new IntWritable(count), new TimePeriodAndText(partition, new Text(uri)));
+        if (visitCount != null && fluxCount != null)
+            context.write(new TwoInteger(visitCount, fluxCount), new TimePeriodAndText(partition, new Text(uri)));
     }
 }
